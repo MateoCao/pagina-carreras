@@ -18,7 +18,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const fallbackData = await getSections();
-  console.log(fallbackData)
 
   return (
     <html lang="en">

@@ -1,9 +1,7 @@
 // app/secciones/[id]/page.tsx
 import { prisma } from "@/lib/prisma";
+import { Params } from "next/dist/server/request/params";
 
-interface Params {
-  id: string;
-}
 
 export default async function SectionPage({ params }: { params: Params }) {
   const paramsSection = await params;
@@ -12,7 +10,6 @@ export default async function SectionPage({ params }: { params: Params }) {
   const section = await prisma.section.findUnique({
     where: { id: sectionId },
   });
-
   if (!section) {
     return <div>Sección no encontrada</div>;
   }

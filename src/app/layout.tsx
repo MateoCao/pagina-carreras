@@ -8,8 +8,15 @@ import { Suspense } from "react";
 config.autoAddCss = false
 
 async function getSections() {
-  const res = await fetch("http://localhost:3000/api/get-sections-title"); // Asegúrate de usar la URL completa
-  return res.json();
+  try {
+    const response = await fetch("http://localhost:3000/api/get-sections-title");
+    if (!response.ok) {
+      throw new Error("Error al obtener los datos");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error en la solicitud fetch:", error);
+  }
 }
 
 export default async function RootLayout({

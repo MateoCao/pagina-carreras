@@ -1,0 +1,10 @@
+// tsconfig.seed.json
+{
+    "extends": "./tsconfig.json", // Hereda la configuración principal
+    "compilerOptions": {
+      "module": "CommonJS", // Cambia a CommonJS para ts-node
+      "outDir": "./dist",   // Opcional: Define una carpeta de salida
+      "rootDir": "."        // Asegúrate de que el directorio raíz sea correcto
+    },
+    "include": ["prisma/seed.ts"] // Solo incluye el archivo de seed
+  }

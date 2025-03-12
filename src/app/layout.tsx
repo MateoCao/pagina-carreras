@@ -5,19 +5,8 @@ import "./globals.css";
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { Suspense } from "react";
+import { getSections } from "./utils/getSections";
 config.autoAddCss = false
-
-async function getSections() {
-  try {
-    const response = await fetch("http://localhost:3000/api/get-sections-title");
-    if (!response.ok) {
-      throw new Error("Error al obtener los datos");
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("Error en la solicitud fetch:", error);
-  }
-}
 
 export default async function RootLayout({
   children,
@@ -25,6 +14,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const fallbackData = await getSections();
+  console.log(fallbackData)
 
   return (
     <html lang="en">

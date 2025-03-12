@@ -1,15 +1,20 @@
-// app/secciones/[id]/page.tsx
 import { prisma } from "@/lib/prisma";
-import { Params } from "next/dist/server/request/params";
 
+export default async function SectionPage({ params }: { params: { id: string } }) {
+  // Verifica que params.id esté definido
+  if (!params.id) {
+    return <div>ID no proporcionado</div>;
+  }
 
-export default async function SectionPage({ params }: { params: Params }) {
-  const paramsSection = await params;
-  const sectionId = Number(paramsSection.id);
+  // Convierte params.id a número
+  const sectionId = Number(params.id);
 
+  // Obtén la sección desde Prisma
   const section = await prisma.section.findUnique({
     where: { id: sectionId },
   });
+
+  // Si no se encuentra la sección, muestra un mensaje
   if (!section) {
     return <div>Sección no encontrada</div>;
   }

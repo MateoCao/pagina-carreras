@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 
-export default async function SectionPage({ params }: { params: { id: string } }) {
+export default async function SectionPage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   // Verifica que params.id esté definido
   if (!params.id) {
     return <div>ID no proporcionado</div>;

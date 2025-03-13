@@ -12,7 +12,7 @@ export const useLiveTimingData = () => {
 
     useEffect(() => {
         // Configuración del socket
-        const socket = io("ws://3.15.5.174:5000", {
+        const socket = io("wss://livetimingxml.serveftp.com", {
             transports: ["websocket"],
             reconnection: true,
             autoConnect: true,

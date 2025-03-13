@@ -3,7 +3,7 @@
 const IniciarSimulacionButton = () => {
     const iniciarSimulacion = async () => {
         try {
-            const response = await fetch("ws://3.15.5.174:5000/iniciar-simulacion", {
+            const response = await fetch("wss://livetimingxml.serveftp.com/iniciar-simulacion", {
                 method: "POST",
             });
             const data = await response.json();

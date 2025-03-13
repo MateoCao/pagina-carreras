@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
 export async function getSections() {
-    return await prisma.section.findMany();
+    const sections = await prisma.section.findMany();
+    return sections;
   }

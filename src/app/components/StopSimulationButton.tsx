@@ -3,7 +3,7 @@
 const StopSimulationButton = () => {
     const detenerSimulacion = async () => {
         try {
-            const response = await fetch("ws://3.15.5.174:5000/detener-simulacion", {
+            const response = await fetch("wss://livetimingxml.serveftp.com/detener-simulacion", {
                 method: "POST",
             });
             const data = await response.json();

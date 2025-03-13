@@ -1,4 +1,3 @@
-// Crea un archivo separado socket.ts
 import { io, Socket } from "socket.io-client";
 
 let socketInstance: Socket | null = null;

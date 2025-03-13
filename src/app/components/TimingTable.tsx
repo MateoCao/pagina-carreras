@@ -25,7 +25,7 @@ export default function TimingTable({ runners, previousSortedIds }: TimingTableP
     <table className="min-w-full table-auto border-collapse bg-gray-100 rounded-lg">
       <TableHeader />
   
-      <tbody>
+      <tbody className="text-black">
         {runners.length > 0 ? rows : (
           <tr>
             <td colSpan={10} className="text-center py-4">Cargando...</td>

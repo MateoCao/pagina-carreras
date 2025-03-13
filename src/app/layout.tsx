@@ -1,4 +1,3 @@
-// app/layout.tsx
 import Navbar from "./components/Navbar";
 import SessionProvider from "./components/SessionProvider";
 import "./globals.css";
@@ -14,7 +13,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const fallbackData = await getSections();
-  console.log(fallbackData)
 
   return (
     <html lang="en">

@@ -1,4 +1,3 @@
-// app/sections/page.tsx
 import Image from "next/image";
 import { getSections } from "./utils/getSections";
 

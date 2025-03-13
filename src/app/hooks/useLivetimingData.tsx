@@ -12,39 +12,32 @@ export const useLiveTimingData = () => {
 
     useEffect(() => {
         // Configuración del socket
-        const socket = io("https://simulador-carreras.onrender.com", {
+        const socket = io("ws://3.15.5.174:5000", {
             transports: ["websocket"],
             reconnection: true,
             autoConnect: true,
         });
 
-        // Guardar referencia del socket
         socketRef.current = socket;
 
-        // Manejar conexión exitosa
         socket.on("connect", () => {
             console.log("🟢 Conectado al servidor");
             setIsConnected(true);
         });
 
-        // Manejar desconexión
         socket.on("disconnect", () => {
             console.log("🔴 Desconectado");
             setIsConnected(false);
         });
 
-        // Manejar actualizaciones de datos
         socket.on("update", (data: { runners: RawRunner[], timestamp: number }) => {
 
             try {
-                // Procesar y ordenar los datos
                 const formattedTime = formatTime(data.timestamp);
                 setTiempoTranscurrido(formattedTime);
                 const processed = data.runners.map(parseRunnerData);
                 const sorted = sortRunners(processed);
                 
-
-                // Actualizar estado con los nuevos datos
                 setRunners(prev => {
                     const prevIds = prev.map(r => r.id);
                     const newIds = sorted.map(r => r.id);
@@ -60,12 +53,10 @@ export const useLiveTimingData = () => {
             }
         });
 
-        // Manejar errores de conexión
         socket.on("connect_error", (err) => {
             console.error("Error de conexión:", err.message);
         });
 
-        // Limpieza al desmontar
         return () => {
             if (socketRef.current) {
                 socketRef.current.disconnect();
@@ -82,7 +73,6 @@ export const useLiveTimingData = () => {
     };
 };
 
-// Helpers
 const parseRunnerData = (raw: RawRunner): Runner => ({
     id: String(raw.id),
     vuelta_completada: String(raw.vuelta_actual),

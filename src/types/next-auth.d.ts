@@ -2,14 +2,14 @@ import "next-auth";
 
 declare module "next-auth" {
   interface User {
-    role?: string; // Agrega la propiedad `role`
-    id?: string;   // Agrega la propiedad `id` si es necesario
+    role?: string; 
+    id?: string;
   }
 
   interface Session {
     user?: {
-      role?: string; // Agrega la propiedad `role` al objeto `user` en la sesión
-      id?: string;   // Agrega la propiedad `id` si es necesario
+      role?: string;
+      id?: string;
     } & DefaultSession["user"];
   }
 }

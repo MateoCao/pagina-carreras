@@ -1,8 +1,11 @@
-export interface Section {
+export type Section = {
     id: number;
     title: string;
-    content: string | null;
-    files: string[];
+    slug: string;
+    parentId: number | null;
+    order: number;
+    contentId: number | null;
     createdAt: Date;
     updatedAt: Date;
-}
+    children?: Section[];   
+  };

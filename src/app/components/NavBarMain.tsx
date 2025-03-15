@@ -2,16 +2,17 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Section } from "../types/section";
+import { NavbarSection } from "../utils/transformSections";
 import { NavbarItems } from "./NavBarItems";
-import { sections } from "../data/sections";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
+interface NavBarMainProps {
+  sections: NavbarSection[]; // Recibir las secciones como prop
+}
 
-
-export const NavBarMain = () => {
-  const [breadcrumb, setBreadcrumb] = useState<Section[]>([]);
+export const NavBarMain = ({ sections }: NavBarMainProps) => {
+  const [breadcrumb, setBreadcrumb] = useState<NavbarSection[]>([]);
 
   const currentSection = breadcrumb.length > 0 ? breadcrumb[breadcrumb.length - 1] : null;
 
@@ -25,7 +26,7 @@ export const NavBarMain = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
-            className="flex flex-col gap-5"
+            className="flex flex-col gap-3"
           >
             {sections.map((section) => (
               <li
@@ -33,7 +34,7 @@ export const NavBarMain = () => {
                 onClick={() => setBreadcrumb([section])}
                 className="cursor-pointer text-xl"
               >
-                {section.name}
+                {section.name.toUpperCase()}
               </li>
             ))}
           </motion.ul>
@@ -46,9 +47,7 @@ export const NavBarMain = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.3 }}
-          >
-            <h3 className="text-xl font-semibold mb-2">{currentSection.name}</h3>
-            
+          > 
             <NavbarItems currentSection={currentSection} setBreadcrumb={setBreadcrumb} breadcrumb={breadcrumb} />
             <button
               className="mt-3 cursor-pointer hover:text-gray-400 transition-normal duration-200 ease-in-out"

@@ -27,9 +27,9 @@ model Section {
   title       String
   slug        String    @unique
   parent      Section?  @relation("SectionHierarchy", fields: [parentId], references: [id])
-  parentId    Int?      // Relación recursiva
+  parentId    Int?
   children    Section[] @relation("SectionHierarchy")
-  order       Int       @default(0)  // Para ordenar las secciones
+  order       Int       @default(0)
   contentType Content?  @relation(fields: [contentId], references: [id])
   contentId   Int?      @unique
   createdAt   DateTime  @default(now())
@@ -38,8 +38,10 @@ model Section {
 
 model Content {
   id        Int      @id @default(autoincrement())
+  type      String   // 'mixed' o 'table' <- Este es el sectionType
   content   String?
   files     String[]
-  section   Section? // Relación 1-1 opcional
-  createdAt DateTime @default(now())
+  tableData Json?
+  section   Section? @relation
+  sectionId Int?     @unique
 }

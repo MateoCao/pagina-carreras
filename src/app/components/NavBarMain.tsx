@@ -6,9 +6,10 @@ import { NavbarSection } from "../utils/transformSections";
 import { NavbarItems } from "./NavBarItems";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import Link from "next/link";
 
 interface NavBarMainProps {
-  sections: NavbarSection[]; // Recibir las secciones como prop
+  sections: NavbarSection[];
 }
 
 export const NavBarMain = ({ sections }: NavBarMainProps) => {
@@ -34,7 +35,11 @@ export const NavBarMain = ({ sections }: NavBarMainProps) => {
                 onClick={() => setBreadcrumb([section])}
                 className="cursor-pointer text-xl"
               >
-                {section.name.toUpperCase()}
+                {section.subsections.length > 0 ? (
+                    <div>{section.name.toUpperCase()}</div>
+                ): (
+                  <Link href={`/sections/${section.slug}`}> {section.name.toUpperCase()} </Link>
+                )}
               </li>
             ))}
           </motion.ul>

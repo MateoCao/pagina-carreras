@@ -1,39 +1,53 @@
-import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { TableView } from "@/app/components/TableView";
+
+// En tu página/componente donde muestras la sección
+async function getSectionData(slug: string) {
+  const section = await prisma.section.findUnique({
+    where: { slug },
+    include: {
+      contentType: true
+    }
+  });
+
+  if (!section || !section.contentType || section.contentType.type !== 'table') {
+    return null;
+  }
+
+  return {
+    title: section.title,
+    tableData: section.contentType.tableData as {
+      columnHeaders: string[];
+      rowNames: string[];
+      cells: Array<{
+        row: number;
+        column: number;
+        url: string;
+        fileName: string;
+        type: 'pdf' | 'csv';
+      }>;
+    }
+  };
+}
 
 export default async function SectionPage(props: { params: Promise<{ slug: string }> }) {
   const params = await props.params;
 
   const sectionSlug = params.slug
-  const section = await prisma.section.findUnique({
-    where: { slug: sectionSlug },
-    include: { contentType: true },
-  });
+  const sectionData = await getSectionData(sectionSlug);
 
-  if (!section) {
-    return notFound();
+  if (!sectionData) {
+    return (
+      <div className="p-6 text-red-500">
+        Sección no encontrada o no es una tabla
+      </div>
+    );
   }
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">{section.title}</h1>
-      {section.contentType && (
-        <div>
-          <p className="mb-4">{section.contentType.content}</p>
-          {section.contentType.files.map((file, index) => (
-            <div key={index} className="mb-2">
-              <a
-                href={file}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:underline"
-              >
-                Ver PDF {index + 1}
-              </a>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+    <TableView
+      title={sectionData.title}
+      tableData={sectionData.tableData}
+    />
   );
 }

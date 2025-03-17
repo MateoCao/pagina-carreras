@@ -8,6 +8,7 @@ interface NavbarItemsProps {
 }
 
 export const NavbarItems = ({ currentSection, setBreadcrumb, breadcrumb }: NavbarItemsProps) => {
+  console.log(currentSection.subsections.length);
   return (
     <ul className="flex flex-col gap-2 text-xl">
       {currentSection.subsections.map((sub) => (

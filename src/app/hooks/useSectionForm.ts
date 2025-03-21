@@ -18,7 +18,7 @@ export const useSectionForm = () => {
     sectionType: 'mixed',
     rows: 1,
     columns: 2,
-    columnHeaders: ['Fila', 'Columna 1'],
+    columnHeaders: ['', 'Columna 1'],
     rowNames: ['Fila 1'],
     cellFiles: [[null]],
   });

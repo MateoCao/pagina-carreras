@@ -17,6 +17,7 @@ interface TableViewProps {
   
   export function TableView({ title, tableData }: TableViewProps) {
     // Organizar las celdas en estructura de matriz
+    console.log(tableData)
     const tableCells = useMemo(() => {
       const matrix: (typeof tableData.cells[0] | null)[][] = 
         Array(tableData.rowNames.length)
@@ -33,17 +34,17 @@ interface TableViewProps {
     }, [tableData]);
   
     return (
-      <div className="p-6 text-black">
-        <h1 className="text-2xl font-bold mb-4">{title}</h1>
+      <div className="p-6 text-black h-full">
+        <h2 className="text-2xl font-bold mb-4">{title}</h2>
         
         <div className="overflow-x-auto">
-          <table className="min-w-full border-collapse border border-gray-200">
+          <table className="min-w-full text-white border-collapse border rounded-lg shadow-md">
             <thead>
               <tr>
                 {tableData.columnHeaders.map((header, index) => (
                   <th 
                     key={index}
-                    className="bg-gray-100 border border-gray-300 p-3 text-left"
+                    className="bg-gray-700 border border-gray-700 p-3 text-left"
                   >
                     {header}
                   </th>
@@ -54,23 +55,21 @@ interface TableViewProps {
             <tbody>
               {tableData.rowNames.map((rowName, rowIndex) => (
                 <tr key={rowIndex}>
-                  {/* Nombre de la fila */}
-                  <td className="border border-gray-200 p-3 font-medium bg-gray-50">
+                  <td className="border border-gray-700 p-3 font-medium bg-gray-700">
                     {rowName}
                   </td>
                   
-                  {/* Celdas de archivos */}
                   {tableCells[rowIndex].map((cell, colIndex) => (
                     <td 
                       key={colIndex}
-                      className="border border-gray-200 p-3"
+                      className="border bg-gray-600 border-gray-700 p-3"
                     >
                       {cell ? (
                         <a
                           href={cell.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 hover:underline flex items-center"
+                          className="text-blue-500 hover:underline flex items-center"
                         >
                           <FileIcon type={cell.type} />
                           <span className="ml-2">{cell.fileName}</span>

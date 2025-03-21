@@ -7,9 +7,10 @@ interface SectionTypeSelectorProps {
     sectionType,
     setSectionType
   }: SectionTypeSelectorProps) => (
-    <div className="mb-4">
-      <label>Tipo de Sección:</label>
+    <div className="mb-4 w-1/2">
+      <label className="mr-2">Tipo de Sección:</label>
       <select
+        className="p-2 rounded mb-2 bg-gray-700 cursor-pointer outline-0"
         value={sectionType}
         onChange={(e) => setSectionType(e.target.value)}
       >

@@ -9,41 +9,48 @@ interface AnimatedRowProps {
 
 export default function AnimatedRow({ runner, runners, previousSortedIds }: AnimatedRowProps) {
   const [animationClass, setAnimationClass] = useState("");
-  const currentPosition = runners.findIndex(r => r.id === runner.id) + 1;
   const [textColor, setColorText] = useState("");
-
-  console.log("IDS ROWS:", previousSortedIds);
 
   useEffect(() => {
     const previousIndex = previousSortedIds.indexOf(runner.id) + 1;
     if (previousIndex === -1) return;
-
-    if (currentPosition < previousIndex) {
-      setAnimationClass("row-move-up");
-    } else if (currentPosition > previousIndex) {
-      setAnimationClass("row-move-down");
+    if (runner.posicion !== 0) {
+      if (runner.posicion < previousIndex) {
+        setAnimationClass("row-move-up");
+      } else if (runner.posicion > previousIndex) {
+        setAnimationClass("row-move-down");
+      }
     }
 
-    if (runner.tiempo_mejor_vuelta < runners[0].tiempo_mejor_vuelta) {
+    // Filtrar valores 0 antes de calcular el mejor tiempo
+    const validLapTimes = runners
+      .map(r => r.mejor_vuelta)
+      .filter(time => time !== 0); // Filtramos los tiempos que sean 0
+
+    const bestLapTime = Math.min(...validLapTimes);
+
+    // Solo se aplica el color púrpura si el mejor tiempo no es 0
+    if (runner.mejor_vuelta !== 0 && runner.mejor_vuelta === bestLapTime) {
       setColorText("purple");
     } else {
-      setColorText("");
+      setColorText(""); // Si no es el mejor tiempo o es 0, no se aplica el color
     }
-  }, [previousSortedIds, runner, currentPosition, runners]);
+  }, [previousSortedIds, runner, runners]);
 
   return (
     <tr
-      className={`hover:bg-gray-200 border-b border-gray-300 ${animationClass}`}
+      className={`hover:bg-gray-700 bg-gray-600 border-b border-gray-800 text-white cursor-pointer ${animationClass}`}
       onAnimationEnd={() => setAnimationClass("")}
     >
-      <td className="px-4 py-2">{currentPosition}</td>
-      <td className="px-4 py-2">{runner.id}</td>
-      <td className="px-4 py-2">{runner.vuelta_completada}</td>
-      <td className="px-4 py-2">{runner.velocidad_actual}</td>
-      <td className="px-4 py-2">{runner.tiempo_ultima_vuelta}</td>
-      <td className="px-4 py-2">{runner.tiempo_total}</td>
-      <td className={`px-4 py-2 ${textColor === "purple" ? "text-purple-500" : ""} `}>{runner.tiempo_mejor_vuelta}</td>
-      <td className="px-4 py-2">{runner.distancia_total_recorrida}</td>
+      <td className="px-4 py-3">{runner.posicion}</td>
+      <td className="px-4 py-3">{runner.nombre}</td>
+      <td className="px-4 py-3">{runner.vueltas_completadas}</td>
+      <td className="px-4 py-3">{runner.velocidad_promedio}</td>
+      <td className="px-4 py-3">{runner.ultima_vuelta}</td>
+      <td className="px-4 py-3">{runner.tiempo_total}</td>
+      <td className={`px-4 py-3 ${textColor === "purple" ? "text-purple-500 font-bold" : ""}`}>
+        {runner.mejor_vuelta}
+      </td>
     </tr>
   );
 }

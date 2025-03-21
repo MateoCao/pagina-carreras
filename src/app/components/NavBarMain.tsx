@@ -29,11 +29,17 @@ export const NavBarMain = ({ sections }: NavBarMainProps) => {
             transition={{ duration: 0.3 }}
             className="flex flex-col gap-3"
           >
+            <li className="cursor-pointer hover:text-gray-400 text-xl">
+              <Link href="/"> Home </Link>
+            </li>
+            <li className="cursor-pointer hover:text-gray-400 text-xl">
+              <Link href="/livetiming"> Livetiming </Link>
+            </li>
             {sections.map((section) => (
               <li
                 key={section.slug}
                 onClick={() => setBreadcrumb([section])}
-                className="cursor-pointer text-xl"
+                className="cursor-pointer hover:text-gray-400 text-xl"
               >
                 {section.subsections.length > 0 ? (
                     <div>{section.name.toUpperCase()}</div>

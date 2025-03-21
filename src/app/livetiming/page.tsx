@@ -1,24 +1,28 @@
 "use client"
 import { useLiveTimingData } from "../hooks/useLivetimingData";
 import TimingTable from "../components/TimingTable";
-import IniciarSimulacionButton from "../components/ActiveSimulationButton";
-import StopSimulationButton from "../components/StopSimulationButton";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function LiveTiming() {
-  const { runners, previousSortedIds, isConnected, tiempoTranscurrido } = useLiveTimingData();
+  const { runners, isLoading, previousSortedIds, isConnected } = useLiveTimingData();
+
+  if (isLoading) return <LoadingSpinner />
+
+  if (!isConnected && !isLoading) return (
+    <div className="w-full h-full flex items-center justify-center">
+      <h2 className="text-2xl font-bold">Actualmente no hay eventos disponibles</h2>
+    </div>
+  )
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Live Timing</h2>
+    <div className="container w-fit flex flex-col items-center justify-center h-2/5 mx-auto p-4">
+      <div className="flex justify-between w-full items-center mb-4">
+        <h2 className="text-2xl font-bold">NOMBRE</h2>
         <div className={`px-4 py-2 rounded-md ${
           isConnected ? "bg-green-500 text-white" : "bg-red-500 text-white"
         }`}>
           {isConnected ? "Conectado" : "Desconectado"}
         </div>
-        <IniciarSimulacionButton />
-        <StopSimulationButton />
-        <p>{tiempoTranscurrido}</p>
       </div>
       <TimingTable 
         runners={runners}

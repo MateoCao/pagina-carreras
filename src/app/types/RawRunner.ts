@@ -1,9 +1,10 @@
 export interface RawRunner {
-    id: string;
-    vuelta_actual: string;
-    velocidad_actual: number;
-    ultimo_tiempo_vuelta: number;
-    tiempo_total: number;
-    mejor_vuelta: number;
-    distancia_total_recorrida: number;
+    number: string;
+    name: string;
+    position: number;
+    laps: number;
+    best_lap: string;
+    average_speed: number;
+    total_time: string;
+    last_lap_time: number;
   }

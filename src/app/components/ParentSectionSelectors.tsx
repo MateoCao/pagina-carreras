@@ -32,7 +32,7 @@ export const ParentSectionSelectors = ({
       };
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 text-gray-100 w-1/2">
       <label className="block mb-2 font-medium">Sección padre:</label>
       {[0, ...selectedPath].map((id, level) => {
         const currentSections = getCurrentSections(level);
@@ -43,11 +43,11 @@ export const ParentSectionSelectors = ({
             key={level}
             value={selectedPath[level] ?? ''}
             onChange={(e) => handleParentSelection(Number(e.target.value), level)}
-            className="w-full p-2 border rounded mb-2"
+            className="w-full p-2 rounded mb-2 bg-gray-700 cursor-pointer outline-0"
           >
             <option value="">Ninguna (sección principal)</option>
             {currentSections.map((section) => (
-              <option key={section.id} value={section.id}>
+              <option className='cursor-pointer outline-0' key={section.id} value={section.id}>
                 {section.title}
               </option>
             ))}

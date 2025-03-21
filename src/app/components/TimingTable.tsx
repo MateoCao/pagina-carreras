@@ -22,13 +22,13 @@ export default function TimingTable({ runners, previousSortedIds }: TimingTableP
   );
 
   return (
-    <table className="min-w-full table-auto border-collapse bg-gray-100 rounded-lg">
+    <table className="table-auto border-collapse bg-gray-600 rounded-lg shadow-md">
       <TableHeader />
   
-      <tbody className="text-black">
+      <tbody className="text-gray-800">
         {runners.length > 0 ? rows : (
           <tr>
-            <td colSpan={10} className="text-center py-4">Cargando...</td>
+            <td colSpan={10} className="text-center py-4 text-white">Cargando...</td>
           </tr>
         )}
       </tbody>

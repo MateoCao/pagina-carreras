@@ -1,42 +1,30 @@
-import { prisma } from "@/lib/prisma";
+"use client";
+
+import useSWR from "swr";
+import { useParams } from "next/navigation";
 import { TableView } from "@/app/components/TableView";
+import LoadingSpinner from "@/app/components/LoadingSpinner";
 
-// En tu página/componente donde muestras la sección
-async function getSectionData(slug: string) {
-  const section = await prisma.section.findUnique({
-    where: { slug },
-    include: {
-      contentType: true
-    }
-  });
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-  if (!section || !section.contentType || section.contentType.type !== 'table') {
-    return null;
+export default function SectionPage() {
+  const params = useParams();
+  const slug = params.slug;
+
+  console.log("🔍 Slug obtenido:", slug);
+
+  const { data, isLoading, error } = useSWR(
+    slug ? `/api/get-section-data?slug=${slug}` : null,
+    fetcher
+  );
+
+  console.log(data)
+
+  if (isLoading) {
+    return <LoadingSpinner />;
   }
 
-  return {
-    title: section.title,
-    tableData: section.contentType.tableData as {
-      columnHeaders: string[];
-      rowNames: string[];
-      cells: Array<{
-        row: number;
-        column: number;
-        url: string;
-        fileName: string;
-        type: 'pdf' | 'csv';
-      }>;
-    }
-  };
-}
-
-export default async function SectionPage(props: { params: Promise<{ slug: string }> }) {
-  const params = await props.params;
-
-  const sectionSlug = params.slug
-  const sectionData = await getSectionData(sectionSlug);
-
-  if (!sectionData) {
+  if (error || !data?.section) {
     return (
       <div className="p-6 text-red-500">
         Sección no encontrada o no es una tabla
@@ -44,10 +32,5 @@ export default async function SectionPage(props: { params: Promise<{ slug: strin
     );
   }
 
-  return (
-    <TableView
-      title={sectionData.title}
-      tableData={sectionData.tableData}
-    />
-  );
+  return <TableView title={data.section.title} tableData={data.section.contentType.tableData} />;
 }

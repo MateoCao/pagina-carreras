@@ -1,4 +1,4 @@
-export const EliminarSeccion = () => {
+export default function EliminarSeccion() {
     return (
         <>
             ELIMINAR

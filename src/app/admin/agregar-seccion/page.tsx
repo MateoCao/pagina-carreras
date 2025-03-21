@@ -1,4 +1,4 @@
-export const AgregarSeccion = () => {
+export default function AgregarSeccion() {
     return (
         <>
             AGREGAR

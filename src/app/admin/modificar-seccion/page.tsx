@@ -1,4 +1,4 @@
-export const ModificarrSeccion = () => {
+export default function ModificarrSeccion() {
     return (
         <>
             MODIFICAR

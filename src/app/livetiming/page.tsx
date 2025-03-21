@@ -15,7 +15,7 @@ export default function LiveTiming() {
   )
 
   return (
-    <div className="container w-fit flex flex-col items-center justify-center h-2/5 mx-auto p-4">
+    <div className="container w-fit flex flex-col items-center justify-center mx-auto p-4">
       <div className="flex justify-between w-full items-center mb-4">
         <h2 className="text-2xl font-bold">NOMBRE</h2>
         <div className={`px-4 py-2 rounded-md ${
